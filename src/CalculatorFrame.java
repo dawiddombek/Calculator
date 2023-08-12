@@ -22,7 +22,7 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         this.setSize(315, 500);
 
         //display - Textfield
-        display = new JTextField();
+        display = new JTextField("0");
         display.setBounds(25,25,250, 50);
         display.setPreferredSize(new Dimension(250, 50));
         display.setEditable(false);
@@ -37,6 +37,7 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         //initialization of buttons + adding buttons to panel
         for (int i = 0; i < 10; i++) {
             numberButtons[i] = new CalculatorButtons(String.valueOf(i));
+            numberButtons[i].addActionListener(this);
         }
 
         addButton = new CalculatorButtons("+");
@@ -47,6 +48,15 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         decButton = new CalculatorButtons(".");
         delButton = new CalculatorButtons("Del");
         clrButton = new CalculatorButtons("Clr");
+
+        addButton.addActionListener(this);
+        subButton.addActionListener(this);
+        mulButton.addActionListener(this);
+        divButton.addActionListener(this);
+        equalsButton.addActionListener(this);
+        decButton.addActionListener(this);
+        delButton.addActionListener(this);
+        clrButton.addActionListener(this);
 
         panel.add(numberButtons[7]);
         panel.add(numberButtons[8]);
@@ -77,5 +87,21 @@ public class CalculatorFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //TODO implement logic to all buttons
+        if(e.getSource() == numberButtons[0] && !display.getText().equals("0")) {
+                display.setText(display.getText() + "0");
+        }
+        for(int i = 1; i < 10; i++) {
+            if(e.getSource() == numberButtons[i]) {
+                if(display.getText().equals("0")) {
+                    display.setText(String.valueOf(i));
+                }
+                else {
+                    display.setText(display.getText() + String.valueOf(i));
+                }
+            }
+        }
+        if(e.getSource() == decButton && !display.getText().contains(".")) {
+            display.setText(display.getText() + ".");
+        }
     }
 }
