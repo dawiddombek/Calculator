@@ -19,17 +19,23 @@ public class CalculatorFrame extends JFrame implements ActionListener {
 
     CalculatorFrame() {
 
+        ImageIcon icon = new ImageIcon("src/resources/calculatorIcon.png");
+
         //Frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(315, 500);
+        this.getContentPane().setBackground(Color.lightGray);
+        this.setIconImage(icon.getImage());
 
         //display - Textfield
         display = new JTextField("0");
         display.setBounds(25,25,250, 50);
         display.setPreferredSize(new Dimension(250, 50));
         display.setEditable(false);
+        display.setHorizontalAlignment(SwingConstants.RIGHT);
+        display.setFont(new Font("", Font.PLAIN, 32));
         this.add(display);
 
         //Buttons panel
@@ -37,6 +43,7 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         panel.setLayout(new GridLayout(4, 4));
         panel.setPreferredSize(new Dimension(250, 250));
         panel.setBounds(25, 100, 250, 250);
+        panel.setBackground(Color.lightGray);
 
         //initialization of buttons + adding buttons to panel
         for (int i = 0; i < 10; i++) {
@@ -148,7 +155,12 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         }
         //adding button
         if(e.getSource() == addButton) {
-            result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            if(sign == ' ') {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            }
+            else {
+                result = mathOperations(result, Float.parseFloat(display.getText()), sign);
+            }
             display.setText("0");
             sign = '+';
         }
@@ -158,7 +170,7 @@ public class CalculatorFrame extends JFrame implements ActionListener {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
             }
             else {
-                result = mathOperations(result, Float.parseFloat(display.getText()), '-');
+                result = mathOperations(result, Float.parseFloat(display.getText()), sign);
             }
             display.setText("0");
             sign = '-';
@@ -169,7 +181,7 @@ public class CalculatorFrame extends JFrame implements ActionListener {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
             }
             else {
-                result = mathOperations(result, Float.parseFloat(display.getText()), '*');
+                result = mathOperations(result, Float.parseFloat(display.getText()), sign);
             }
             display.setText("0");
             sign = '*';
@@ -180,7 +192,7 @@ public class CalculatorFrame extends JFrame implements ActionListener {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
             }
             else {
-                result = mathOperations(result, Float.parseFloat(display.getText()), '/');
+                result = mathOperations(result, Float.parseFloat(display.getText()), sign);
             }
             display.setText("0");
             sign = '/';
