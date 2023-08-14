@@ -13,6 +13,10 @@ public class CalculatorFrame extends JFrame implements ActionListener {
 
     CalculatorButtons addButton, subButton, mulButton, divButton, equalsButton, decButton, delButton, clrButton;
 
+    float firstNumber = 0, secondNumber = 0, result = 0;
+
+    char sign = ' ';
+
     CalculatorFrame() {
 
         //Frame
@@ -84,15 +88,40 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    public float mathOperations(float firstNumber, float secondNumber, char sign) {
+        switch (sign) {
+            case '+':
+                this.sign = '+';
+                return firstNumber + secondNumber;
+            case '-':
+                this.sign = '-';
+                return firstNumber - secondNumber;
+            case '*':
+                this.sign = '*';
+                return firstNumber * secondNumber;
+            case '/':
+                this.sign = '/';
+                return firstNumber / secondNumber;
+            default:
+                return 0;
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         //TODO implement logic to all buttons
+        //numbers buttons
         if(e.getSource() == numberButtons[0] && !display.getText().equals("0")) {
                 display.setText(display.getText() + "0");
         }
         for(int i = 1; i < 10; i++) {
             if(e.getSource() == numberButtons[i]) {
-                if(display.getText().equals("0")) {
+                if(sign == '=') {
+                    result = 0;
+                    display.setText(String.valueOf(i));
+                    sign = ' ';
+                }
+                else if(display.getText().equals("0")) {
                     display.setText(String.valueOf(i));
                 }
                 else {
@@ -100,8 +129,67 @@ public class CalculatorFrame extends JFrame implements ActionListener {
                 }
             }
         }
+        //decimal button
         if(e.getSource() == decButton && !display.getText().contains(".")) {
             display.setText(display.getText() + ".");
+        }
+        //clear button
+        if(e.getSource() == clrButton) {
+            display.setText("0");
+        }
+        //delete button
+        if(e.getSource() == delButton) {
+            if(display.getText().length() == 1) {
+                display.setText("0");
+            }
+            else {
+                display.setText(display.getText().substring(0, display.getText().length() - 1));
+            }
+        }
+        //adding button
+        if(e.getSource() == addButton) {
+            result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            display.setText("0");
+            sign = '+';
+        }
+        //subtraction button
+        if(e.getSource() == subButton) {
+            if(sign == ' ') {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            }
+            else {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '-');
+            }
+            display.setText("0");
+            sign = '-';
+        }
+        //multiplication button
+        if(e.getSource() == mulButton) {
+            if(sign == ' ') {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            }
+            else {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '*');
+            }
+            display.setText("0");
+            sign = '*';
+        }
+        //division button
+        if(e.getSource() == divButton) {
+            if(sign == ' ') {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            }
+            else {
+                result = mathOperations(result, Float.parseFloat(display.getText()), '/');
+            }
+            display.setText("0");
+            sign = '/';
+        }
+        //equals button
+        if(e.getSource() == equalsButton) {
+            result = mathOperations(result, Float.parseFloat(display.getText()), sign);
+            display.setText(String.valueOf(result));
+            sign = '=';
         }
     }
 }
