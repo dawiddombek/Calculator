@@ -158,6 +158,9 @@ public class CalculatorFrame extends JFrame implements ActionListener {
             if(sign == ' ') {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
             }
+            else if(sign == '=') {
+                sign = '+';
+            }
             else {
                 result = mathOperations(result, Float.parseFloat(display.getText()), sign);
             }
@@ -168,6 +171,9 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         if(e.getSource() == subButton) {
             if(sign == ' ') {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            }
+            else if(sign == '=') {
+                sign = '-';
             }
             else {
                 result = mathOperations(result, Float.parseFloat(display.getText()), sign);
@@ -180,6 +186,9 @@ public class CalculatorFrame extends JFrame implements ActionListener {
             if(sign == ' ') {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
             }
+            else if(sign == '=') {
+                sign = '*';
+            }
             else {
                 result = mathOperations(result, Float.parseFloat(display.getText()), sign);
             }
@@ -190,6 +199,9 @@ public class CalculatorFrame extends JFrame implements ActionListener {
         if(e.getSource() == divButton) {
             if(sign == ' ') {
                 result = mathOperations(result, Float.parseFloat(display.getText()), '+');
+            }
+            else if(sign == '=') {
+                sign = '/';
             }
             else {
                 result = mathOperations(result, Float.parseFloat(display.getText()), sign);
